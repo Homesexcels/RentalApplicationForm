@@ -1,0 +1,10 @@
+{
+  "description": "Streamlines rental applications by collecting tenant details and payment info with instant confirmation, simplifying low-income housing requests.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
