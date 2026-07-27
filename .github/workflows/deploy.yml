@@ -2,16 +2,7 @@ name: Deploy Figma Make Site
 
 on:
   push:
-    branches: ["main"] # Change to "master" if your primary branch uses that name
-
-permissions:
-  contents: read
-  pages: write
-  id-token: writename: Deploy Figma Make Site
-
-on:
-  push:
-    branches: ["main"] # Change to "master" if your primary branch uses that name
+    branches: ["main"]
 
 permissions:
   contents: read
@@ -36,7 +27,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          # FIXED: Removed the cache line that was crashing without a lockfile
 
       - name: Install Dependencies
         run: npm install
@@ -48,42 +38,6 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: './dist'
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
-
-jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-
-      - name: Install Dependencies
-        run: npm ci || npm install
-
-      - name: Build Application
-        run: npm run build
-
-      - name: Upload Build Artifacts
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './dist' # Figma Make compiles its build files inside the dist directory
 
       - name: Deploy to GitHub Pages
         id: deployment
